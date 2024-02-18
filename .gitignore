@@ -3,13 +3,13 @@
 *.d
 *.crf
 
-# Directory Ignore (Drivers can be generated from STMCubeMX)
+# Directory Ignore
 .vscode/*
 MDK-ARM/*
+build/*
 
 # Other File in Source Folder
 .mxproject
-Makefile
 startup_stm32f407xx.s
 STM32F407IGHx_FLASH.ld
 
