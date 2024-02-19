@@ -1,4 +1,11 @@
-## vscode MAKEFILE env setup guide
+# Repository Initialization Guide
+``` bash
+git clone https://github.com/RoboMaster-Club/Control_Base_Template.git
+cd Control_Base_Template
+git submodule update --init
+```
+
+# vscode MAKEFILE env setup guide
 ### install env tools
 - download msys2 from [here] (https://www.msys2.org/)
 
@@ -6,7 +13,7 @@
 
 - install openocd, gdb-multiarch
 
-``` shell
+``` bash
 pacman -S mingw-w64-x86_64-openocd
 pacman -S mingw-w64-x86_64-gdb-multiarch
 ```
