@@ -5,3 +5,6 @@ Chip: STM32F407
 ```
 
 TO BE COMPLETED
+
+## vscode setup guide
+### download and install msys2

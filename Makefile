@@ -232,4 +232,6 @@ clean:
 #######################################
 -include $(wildcard $(BUILD_DIR)/*.d)
 
+download_dap:
+	openocd -f openocd_cmsis_dap.cfg -c init -c halt -c "flash write_image erase $(BUILD_DIR)/$(TARGET).bin 0x08000000" -c reset -c shutdown
 # *** EOF ***
