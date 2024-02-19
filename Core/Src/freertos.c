@@ -34,6 +34,7 @@
 #include "bsp_can.h"
 #include "imu_task.h"
 #include "bsp_serial.h"
+#include "dji_motor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,8 +59,10 @@ osThreadId imu_TaskHandle;
 osThreadId global_init_tasHandle;
 osThreadId can1_txHandle;
 osThreadId debug_taskHandle;
+osThreadId robot_ctrl_taskHandle;
+osThreadId can2_txHandle;
 osMessageQId can1_tx_queueHandle;
-osMessageQId can1_rx_queueHandle;
+osMessageQId can2_tx_queueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -69,6 +72,8 @@ void Global_Init(void);
 void GlobalInit(void const * argument);
 extern void CAN_BSP_CAN1Tx(void const * argument);
 void Debug_Task(void const * argument);
+void Robot_Ctrl(void const * argument);
+extern void CAN_BSP_CAN2Tx(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -128,12 +133,12 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* definition and creation of can1_tx_queue */
-  osMessageQDef(can1_tx_queue, 32, CAN_Tx_Pack_t);
+  osMessageQDef(can1_tx_queue, 4, CAN_Tx_Pack_t);
   can1_tx_queueHandle = osMessageCreate(osMessageQ(can1_tx_queue), NULL);
 
-  /* definition and creation of can1_rx_queue */
-  osMessageQDef(can1_rx_queue, 32, CAN_Tx_Pack_t);
-  can1_rx_queueHandle = osMessageCreate(osMessageQ(can1_rx_queue), NULL);
+  /* definition and creation of can2_tx_queue */
+  osMessageQDef(can2_tx_queue, 4, CAN_Tx_Pack_t);
+  can2_tx_queueHandle = osMessageCreate(osMessageQ(can2_tx_queue), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -151,6 +156,14 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of debug_task */
   osThreadDef(debug_task, Debug_Task, osPriorityIdle, 0, 128);
   debug_taskHandle = osThreadCreate(osThread(debug_task), NULL);
+
+  /* definition and creation of robot_ctrl_task */
+  osThreadDef(robot_ctrl_task, Robot_Ctrl, osPriorityHigh, 0, 512);
+  robot_ctrl_taskHandle = osThreadCreate(osThread(robot_ctrl_task), NULL);
+
+  /* definition and creation of can2_tx */
+  osThreadDef(can2_tx, CAN_BSP_CAN2Tx, osPriorityHigh, 0, 128);
+  can2_txHandle = osThreadCreate(osThread(can2_tx), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 
@@ -219,6 +232,26 @@ __weak void Debug_Task(void const * argument)
     vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
   }
   /* USER CODE END Debug_Task */
+}
+
+/* USER CODE BEGIN Header_Robot_Ctrl */
+/**
+* @brief Function implementing the robot_ctrl_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Robot_Ctrl */
+__weak void Robot_Ctrl(void const * argument)
+{
+  /* USER CODE BEGIN Robot_Ctrl */
+  
+  /* Infinite loop */
+  for(;;)
+  {
+    DJI_Motor_Send(HEAD, 1, 3000, 0, 0, 0);
+    osDelay(1);
+  }
+  /* USER CODE END Robot_Ctrl */
 }
 
 /* Private application code --------------------------------------------------*/
