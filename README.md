@@ -29,3 +29,13 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 # Common Issue
 ## 1. windows fails to initializing cmsis-dap debugger. 
 Solution: Go to device manager and uninstall the usb device (probably having some error message in the list). Unplug and plug in the debugger again.
+
+## 2.  openocd not found
+```
+Failed to launch OpenOCD GDB Server:...
+```
+Solution1:
+Add openocd.exe to system environmental variable. If you followed the installation instruction in this README file, then OpenOCD should be install at default location `C:\msys64\mingw64\bin\openocd.exe`, for windows user. Add `C:\msys64\mingw64\bin` to system executable path.
+
+Solution2:
+If you don't want to mess with the system path, you could also add local openocd path in `.vscode/launch.json`. Add attribute `serverpath` by adding `"serverpath": "C:\\msys64\\mingw64\\bin\\openocd.exe"` in configuration.
