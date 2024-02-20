@@ -1,4 +1,5 @@
-
+# Purdue Robomasters Control Base Template
+This repository contains the shared control code between Purdue Robomasters robots.
 
 # Repository Initialization Guide
 ``` bash
@@ -7,8 +8,8 @@ cd Control_Base_Template
 git submodule update --init
 ```
 
-# vscode MAKEFILE env setup guide
-### install env tools
+## vscode MAKEFILE env setup guide
+### Install env tools
 - download msys2 from [here] (https://www.msys2.org/)
 
 - the default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
@@ -27,15 +28,15 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 
 - Open json file of the extension, and add `"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"` to the end of 'setting.json' of Cortex-Debug extension setting.
 
-### how to use
+### How to use
 - build: [Termimal]->[Run Task...]->[build task]. ShortCut [Ctrl+Shift+B]
 - debug: navigate to Run and Debug in vscode with [Strl+Shift+D], select the launch task, and run debug. Shortcut [F5].
 
-# Common Issue
-### 1. windows fails to initializing cmsis-dap debugger. 
+## Common Issues
+### 1. Windows fails to initializing cmsis-dap debugger. 
 Solution: Go to device manager and uninstall the usb device (probably having some error message in the list). Unplug and plug in the debugger again.
 
-### 2.  tools (OpenOCD, make tools) not found
+### 2.  Tools (OpenOCD, make tools) not found
 ```
 Failed to launch OpenOCD GDB Server:...
 ```
@@ -53,9 +54,78 @@ If you don't want to mess with the system path, you could also add local openocd
 **Note**
 restarting vscode might be needed for new environment variable to take effect.
 
-# Tips
-## vscode IntelliSense Configuration
+## Tips
+### VSCode IntelliSense Configuration
 ```
 "C_Cpp.default.compilerPath": "C:/msys64/mingw64/bin/arm-none-eabi-gcc.exe"
 ```
 adding this would link the standard library header files, such as `stdint.h`, `stdlib.h`, `math.h`.
+
+# Development Conventions
+**All names must use snake_case.**
+
+Variable names are all lowercase.
+```c
+ float example_float = 1.5f;
+```
+
+Macros should be all UPPERCASE.
+```c
+ #define EXAMPLE_MACRO 3.14f 
+```
+
+Function names should capitalize the first letter of each word.
+```c
+ float Example_Function() {}
+```
+
+Wrapper functions should capitalize the first word.
+```c
+ float MOTOR_Example_Function() {}
+```
+
+Struct names should capitalize the first letter of each word and end in _t. 
+```c
+ struct Example_Struct_t {} 
+```
+
+When using struct pointers, don't put a space between the arrow.
+```c
+ struct Example_Struct_t {
+    int example_struct_member;
+ } example_struct;
+ // access member
+ example_struct->example_struct_member;
+```
+
+Enum names should capitalized the first letter of each word and end in _e.
+```c
+ enum Example_Enum_e {};
+```
+
+In general, indent code blocks for functions and if statments as such, but for switches put cases in the same line.
+```c
+void Example_Func()
+{
+   if (some_condition)
+   {
+      switch(some_num)
+      {
+      case 0:
+         break;
+      default:
+         break;
+      }
+   }
+}
+```
+
+For multiline macros, indent as such:
+```c
+#define YOUR_MACRO        \
+   {                      \
+      FIRST_LINE = 0,     \
+         SECOND_LINE = 1, \
+         THIRD_LINE = 2,  \
+   }
+```
