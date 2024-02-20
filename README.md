@@ -25,3 +25,7 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 ### how to use
 - build: [Termimal]->[Run Task...]->[build task]. ShortCut [Ctrl+Shift+B]
 - debug: navigate to Run and Debug in vscode with [Strl+Shift+D], select the launch task, and run debug. Shortcut [F5].
+
+# Common Issue
+## 1. windows fails to initializing cmsis-dap debugger. 
+Solution: Go to device manager and uninstall the usb device (probably having some error message in the list). Unplug and plug in the debugger again.
