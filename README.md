@@ -1,3 +1,5 @@
+
+
 # Repository Initialization Guide
 ``` bash
 git clone https://github.com/RoboMaster-Club/Control_Base_Template.git
@@ -11,12 +13,15 @@ git submodule update --init
 
 - the default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
 
-- install openocd, gdb-multiarch
+- install openocd, arm-none-eabi-gcc, gdb-multiarch from [mingw64 packages](https://packages.msys2.org/package/)
 
 ``` bash
 pacman -S mingw-w64-x86_64-openocd
+pacman -S mingw-w64-x86_64-arm-none-eabi-gcc
 pacman -S mingw-w64-x86_64-gdb-multiarch
 ```
+
+- add tool path for openocd and make tool
 
 - install vscode extension `Cortex-Debug`
 
@@ -27,15 +32,30 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 - debug: navigate to Run and Debug in vscode with [Strl+Shift+D], select the launch task, and run debug. Shortcut [F5].
 
 # Common Issue
-## 1. windows fails to initializing cmsis-dap debugger. 
+### 1. windows fails to initializing cmsis-dap debugger. 
 Solution: Go to device manager and uninstall the usb device (probably having some error message in the list). Unplug and plug in the debugger again.
 
-## 2.  openocd not found
+### 2.  tools (OpenOCD, make tools) not found
 ```
 Failed to launch OpenOCD GDB Server:...
+```
+or
+```
+mingw32-make: The term 'mingw32-make' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
 ```
 Solution1:
 Add openocd.exe to system environmental variable. If you followed the installation instruction in this README file, then OpenOCD should be install at default location `C:\msys64\mingw64\bin\openocd.exe`, for windows user. Add `C:\msys64\mingw64\bin` to system executable path.
 
 Solution2:
 If you don't want to mess with the system path, you could also add local openocd path in `.vscode/launch.json`. Add attribute `serverpath` by adding `"serverpath": "C:\\msys64\\mingw64\\bin\\openocd.exe"` in configuration.
+
+**Note**
+restarting vscode might be needed for new environment variable to take effect.
+
+# Tips
+## vscode IntelliSense Configuration
+```
+"C_Cpp.default.compilerPath": "C:/msys64/mingw64/bin/arm-none-eabi-gcc.exe"
+```
+adding this would link the standard library header files, such as `stdint.h`, `stdlib.h`, `math.h`.
