@@ -10,7 +10,7 @@ git submodule update --init
 
 ## vscode MAKEFILE env setup guide
 ### Install env tools
-- download msys2 from [here] (https://www.msys2.org/)
+- download msys2 from [here](https://www.msys2.org/)
 
 - the default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
 
