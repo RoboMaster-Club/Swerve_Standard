@@ -24,8 +24,7 @@
 
 typedef struct
 {
-    int Current_Mode;
-    Swerve_Module_t Modules[NUMBER_OF_MODULES];
+    Swerve_Module_t modules[NUMBER_OF_MODULES];
 } Swerve_t;
 
 typedef struct
@@ -35,12 +34,12 @@ typedef struct
 
 typedef struct
 {
-    Module_State_t States[NUMBER_OF_MODULES];
+    Module_State_t states[NUMBER_OF_MODULES];
 } Module_State_Array_t;
 
-extern Swerve_t Swerve;
+extern Swerve_t swerve;
 
 extern void Init_Modules(void);
-extern void Swerve_Processing(Swerve_t *Swerve);
+extern void Swerve_Processing(Swerve_t *swerve);
 
 #endif

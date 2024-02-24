@@ -13,21 +13,20 @@ typedef struct
 
 typedef struct
 {
-    bool Azimuth_Encoder_Reversed;
-    int Azimuth_CAN_ID;
-    float Azimuth_Encoder_Zero_Offset;
+    bool azimuth_encoder_reversed;
+    float azimuth_zero_encoder_offset;
+    uint16_t azimuth_can_id;
+    PID_t azimuth_pid;
+    DJI_Motor_t azimuth_motor;
 
-    uint16_t Drive_CAN_ID;
-    PID_t Azimuth_PID;
-    DJI_Motor_t Azimuth_Motor;
+    uint16_t drive_can_id;
+    PID_t drive_pid;
+    DJI_Motor_t drive_motor;
 
-    PID_t Drive_PID;
-    DJI_Motor_t Drive_Motor;
-
-    Module_State_t Module_State;
+    Module_State_t module_state;
 } Swerve_Module_t;
 
-extern void Init_Swerve_Module(Swerve_Module_t *Swerve_Module, bool Azimuth_Encoder_Reversed, int Azimuth_CAN_ID);
-extern void Set_Module_Output(Swerve_Module_t *Swerve_Module, Module_State_t Desired_State);
+extern void Init_Swerve_Module(Swerve_Module_t *swerve_module, bool azimuth_encoder_reversed, int azimuth_can_id);
+extern void Set_Module_Output(Swerve_Module_t *swerve_module, Module_State_t desired_state);
 
 #endif

@@ -2,31 +2,32 @@
 #include <stdbool.h>
 #include <user_math.h>
 
-void Set_Module_Output(Swerve_Module_t *Swerve_Module, Module_State_t Desired_State);
+void Set_Module_Output(Swerve_Module_t *swerve_module, Module_State_t desired_state);
 
 /* Initialize physical swerve constants */
-void Init_Swerve_Module(Swerve_Module_t *Swerve_Module, bool Azimuth_Encoder_Reversed, int Azimuth_CAN_ID)
+void Init_Swerve_Module(Swerve_Module_t *swerve_module, bool azimuth_encoder_reversed, int azimuth_can_id)
 { // TODO add relevant constants
-	Swerve_Module->Azimuth_Encoder_Reversed = Azimuth_Encoder_Reversed;
-	Swerve_Module->Azimuth_CAN_ID = Azimuth_CAN_ID;
+	swerve_module->azimuth_encoder_reversed = azimuth_encoder_reversed;
+	swerve_module->azimuth_can_id = azimuth_can_id;
 }
 
 /* Optimize wheel angle so wheel doesn't have to rotate more than 90deg*/
-Module_State_t Optimize_Module_Angle(Module_State_t Input_State, float Measured_Angle)
+Module_State_t Optimize_Module_Angle(Module_State_t input_state, float measured_angle)
 {
 	Module_State_t optimized_module_state;
-	float wheel_angle_delta = Input_State.angle - Measured_Angle;
+	float wheel_angle_delta = input_state.angle - measured_angle;
 
 	if (fabsf(wheel_angle_delta) > PI / 2)
 	{ // if the delta is more than 90 degrees
-		optimized_module_state.speed = -1 * Input_State.speed;
-		optimized_module_state.angle = fmodf(Input_State.angle + PI, 2 * PI); // rotate the target by 180 degrees
+		optimized_module_state.speed = -1 * input_state.speed;
+		optimized_module_state.angle = fmodf(input_state.angle + PI, 2 * PI); // rotate the target by 180 degrees
 	}
 
 	return optimized_module_state;
 }
 
 /*Command motors to output calculated module state*/
-void Set_Module_Output(Swerve_Module_t *Swerve_Module, Module_State_t Desired_State)
+void Set_Module_Output(Swerve_Module_t *swerve_module, Module_State_t desired_state)
 {
+	// TODO
 }
