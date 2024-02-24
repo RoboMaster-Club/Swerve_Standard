@@ -2,7 +2,7 @@
 #define SWERVE_MODULE_h
 
 #include "pid.h"
-#include <stdbool.h>
+#include "stdbool.h"
 #include "dji_motor.h"
 
 typedef struct

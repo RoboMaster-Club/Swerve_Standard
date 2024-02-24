@@ -1,6 +1,6 @@
 #include "Swerve.h"
 #include "Swerve_Module.h"
-#include <stdbool.h>
+#include "stdbool.h"
 
 /* Declare swerve struct */
 Swerve_t swerve;
@@ -19,7 +19,7 @@ float swerve_state_matrix[8][3] = {
     {1, 0, +(WHEEL_BASE / 2)}, // back left 2
     {0, 1, +(TRACK_WIDTH / 2)},
     {1, 0, +(WHEEL_BASE / 2)}, // back right 3
-    {0, 1, -(TRACK_WIDTH / 2)},
+    {0, 1, -(TRACK_WIDTH / 2)}
 };
 
 void Init_Modules(void);
