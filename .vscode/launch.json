@@ -13,7 +13,9 @@
                 "openocd_cmsis_dap.cfg" // config
             ],
             "runToEntryPoint": "main", // stop at main
-            "rtos": "FreeRTOS"
+            "rtos": "FreeRTOS",
+            "gdbPath": "/usr/local/arm-gnu-toolchain-13.2.Rel1-darwin-arm64-arm-none-eabi/bin/arm-none-eabi-gdb",
+            "armToolchainPath": "/usr/local/arm-gnu-toolchain-13.2.Rel1-darwin-arm64-arm-none-eabi/bin"
         },
         {
             "name": "cmsis-dap-debug (Windows)",

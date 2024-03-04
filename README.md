@@ -9,7 +9,9 @@ git submodule update --init
 ```
 
 ## VSCode MAKEFILE environment setup guide
-### Install environment tools
+### Install tools
+Download VSCode from [here](https://code.visualstudio.com/download)
+
 **Windows**
 - Download MSYS2 from [here](https://www.msys2.org/)
 - The default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
@@ -21,14 +23,14 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 ```
 
 **MacOS - Apple Silicon**
- - Install arm-none-eabi-gcc (darwin-arm64) from [here](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) into your `usr/local/` directory. (homebrew does not install all the necessary files)
- - Install OpenOCD using [homebrew](https://docs.brew.sh/Installation)
+ - Install arm-none-eabi-gcc(darwin-arm64) from [here](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) into your `usr/local/` directory. (homebrew does not install all the necessary files)
+ - Install OpenOCD and arm-none-eabi-gdb using [homebrew](https://docs.brew.sh/Installation)
 ```zsh
 brew install openocd
+brew install arm-none-eabi-gdb
 ```
-- GDB is not currently supported on apple silicon
-## Common Issues
 
+## Set up VSCode
 - add tool path for openocd and make tool
 - install vscode extension `Cortex-Debug`
 
