@@ -8,22 +8,28 @@ cd Control_Base_Template
 git submodule update --init
 ```
 
-## vscode MAKEFILE env setup guide
-### Install env tools
-- download msys2 from [here](https://www.msys2.org/)
-
-- the default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
-
-- install openocd, arm-none-eabi-gcc, gdb-multiarch from [mingw64 packages](https://packages.msys2.org/package/)
-
-``` bash
+## VSCode MAKEFILE environment setup guide
+### Install environment tools
+**Windows**
+- Download MSYS2 from [here](https://www.msys2.org/)
+- The default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
+- Install OpenOCD, arm-none-eabi-gcc, and gdb-multiarch from [here](https://packages.msys2.org/package/)
+```bash
 pacman -S mingw-w64-x86_64-openocd
 pacman -S mingw-w64-x86_64-arm-none-eabi-gcc
 pacman -S mingw-w64-x86_64-gdb-multiarch
 ```
 
-- add tool path for openocd and make tool
+**MacOS - Apple Silicon**
+ - Install arm-none-eabi-gcc (darwin-arm64) from [here](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) into your `usr/local/` directory. (homebrew does not install all the necessary files)
+ - Install OpenOCD using [homebrew](https://docs.brew.sh/Installation)
+```zsh
+brew install openocd
+```
+- GDB is not currently supported on apple silicon
+## Common Issues
 
+- add tool path for openocd and make tool
 - install vscode extension `Cortex-Debug`
 
 - Open json file of the extension, and add `"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"` to the end of 'setting.json' of Cortex-Debug extension setting.
