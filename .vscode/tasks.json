@@ -24,7 +24,7 @@
             }
         },
         {
-            "label": "build task (Windows)",
+            "label": "build (Windows)",
             "type": "shell",
             "command": "mingw32-make -j24",
             "group": {

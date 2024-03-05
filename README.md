@@ -27,7 +27,6 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
  - Install OpenOCD and arm-none-eabi-gdb using [homebrew](https://docs.brew.sh/Installation).
 ```zsh
 brew install openocd
-brew install arm-none-eabi-gdb
 ```
 
 **Make sure to add necessary tools to PATH variable.** This will allow your tools to be accessed globally.
@@ -42,28 +41,26 @@ brew install arm-none-eabi-gdb
 
 ## How to use
 ### Building the Project
-**Windows:**
-- Open the Terminal in VSCode: [Terminal] -> [New Terminal].
-Run the build task: [Terminal] -> [Run Task...] -> select **build task (Windows)**. You can use the shortcut [Ctrl+Shift+B] if you set it as the default build task.
+Open the Command Palatte in VSCode: [Ctrl+Shift+P].
+Select **Tasks: Run Build Tasks** then pick the appropriate build task.
+- Windows: **build (Windows)**. 
+- MacOS: **build (Darwin)**
 
-**MacOS (Darwin)**
-- Open the Terminal in VSCode: [Terminal] -> [New Terminal].
-Run the build task: [Terminal] -> [Run Task...] -> select **build (Darwin)**. You can use the shortcut [Ctrl+Shift+B] if you set it as the default build task.
-
+You can use the shortcut [Ctrl+Shift+B] if you set it as the default build task.
 
 
 ### Debugging the Project
 - Navigate to [Run and Debug] in VSCode or press [Ctrl+Shift+D].
 Select the appropriate launch configuration 
-   - for macOS cmsis-dap-debug (Darwin)
-   -  for Windows cmsis-dap-debug (Windows)
+   - Windows: **cmsis-dap-debug (Windows)**
+   - MacOS: **cmsis-dap-debug (Darwin)**
 - Click on the green play button or press [F5] to start debugging.
 
 ## Common Issues
 ### 1. Windows fails to initializing cmsis-dap debugger. 
 Solution: Go to device manager and uninstall the usb device (probably having some error message in the list). Unplug and plug in the debugger again.
 
-### 2.  Tools (OpenOCD, make tools) not found
+### 2. Tools (OpenOCD, make tools) not found
 ```
 Failed to launch OpenOCD GDB Server:...
 ```
@@ -72,10 +69,10 @@ or
 mingw32-make: The term 'mingw32-make' is not recognized as a name of a cmdlet, function, script file, or executable program.
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
 ```
-Solution1:
+**Solution1:**
 Add openocd.exe to system environmental variable. If you followed the installation instruction in this README file, then OpenOCD should be install at default location `C:\msys64\mingw64\bin\openocd.exe`, for windows user. Add `C:\msys64\mingw64\bin` to system executable path.
 
-Solution2:
+**Solution2:**
 If you don't want to mess with the system path, you could also add local openocd path in `.vscode/launch.json`. Add attribute `serverpath` by adding `"serverpath": "C:\\msys64\\mingw64\\bin\\openocd.exe"` in configuration.
 
 **Note**
