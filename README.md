@@ -29,7 +29,7 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 brew install openocd
 ```
 
-**Make sure to add necessary tools to PATH variable.** This will allow your tools to be accessed globally.
+**Make sure to add necessary tools to PATH variable.** This will allow your tools to be accessed globally. Alternatively you can modify the vscode .json files.
 
 ### Set up VSCode
 - Add the tool path for OpenOCD and make tools.
@@ -42,19 +42,20 @@ brew install openocd
 ## How to use
 ### Building the Project
 Open the Command Palatte in VSCode: [Ctrl+Shift+P].
-Select **Tasks: Run Build Tasks** then pick the appropriate build task.
-- Windows: **build (Windows)**. 
-- MacOS: **build (Darwin)**
+Then, select **Tasks: Run Build Tasks** and pick the appropriate build task.
+- **Windows:** build (Windows). 
+- **MacOS:** build (Darwin).
 
 You can use the shortcut [Ctrl+Shift+B] if you set it as the default build task.
 
 
 ### Debugging the Project
-- Navigate to [Run and Debug] in VSCode or press [Ctrl+Shift+D].
+Navigate to [Run and Debug] in VSCode or press [Ctrl+Shift+D].
 Select the appropriate launch configuration 
-   - Windows: **cmsis-dap-debug (Windows)**
-   - MacOS: **cmsis-dap-debug (Darwin)**
-- Click on the green play button or press [F5] to start debugging.
+- **Windows:** cmsis-dap-debug (Windows)
+- **MacOS:** cmsis-dap-debug (Darwin)
+
+Click on the green play button or press [F5] to start debugging.
 
 ## Common Issues
 ### 1. Windows fails to initializing cmsis-dap debugger. 
