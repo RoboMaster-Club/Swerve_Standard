@@ -15,7 +15,7 @@ Download VSCode from [here](https://code.visualstudio.com/download)
 **Windows**
 - Download MSYS2 from [here](https://www.msys2.org/)
 - The default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
-- Install OpenOCD, arm-none-eabi-gcc, and gdb-multiarch from [here](https://packages.msys2.org/package/)
+- Install OpenOCD, arm-none-eabi-gcc, and gdb-multiarch by running these commands in MSYS2 terminal.
 ```bash
 pacman -S mingw-w64-x86_64-openocd
 pacman -S mingw-w64-x86_64-arm-none-eabi-gcc
@@ -23,22 +23,41 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 ```
 
 **MacOS - Apple Silicon**
- - Install arm-none-eabi-gcc(darwin-arm64) from [here](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) into your `usr/local/` directory. (homebrew does not install all the necessary files)
- - Install OpenOCD and arm-none-eabi-gdb using [homebrew](https://docs.brew.sh/Installation)
+ - Install arm-none-eabi-gcc(darwin-arm64) from [here](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) into your `usr/local/` directory (homebrew does not install all the necessary files).
+ - Install OpenOCD and arm-none-eabi-gdb using [homebrew](https://docs.brew.sh/Installation).
 ```zsh
 brew install openocd
 brew install arm-none-eabi-gdb
 ```
 
-## Set up VSCode
-- add tool path for openocd and make tool
-- install vscode extension `Cortex-Debug`
+**Make sure to add necessary tools to PATH variable.** This will allow your tools to be accessed globally.
 
-- Open json file of the extension, and add `"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"` to the end of 'setting.json' of Cortex-Debug extension setting.
+### Set up VSCode
+- Add the tool path for OpenOCD and make tools.
 
-### How to use
-- build: [Termimal]->[Run Task...]->[build task]. ShortCut [Ctrl+Shift+B]
-- debug: navigate to Run and Debug in vscode with [Strl+Shift+D], select the launch task, and run debug. Shortcut [F5].
+- Install the VSCode extension [Cortex-Debug](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug) to enable ARM microcontroller debugging.
+
+- Open the 'setting.json' file of the Cortex-Debug extension, and add
+`"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"` to the end.
+
+## How to use
+### Building the Project
+**Windows:**
+- Open the Terminal in VSCode: [Terminal] -> [New Terminal].
+Run the build task: [Terminal] -> [Run Task...] -> select **build task (Windows)**. You can use the shortcut [Ctrl+Shift+B] if you set it as the default build task.
+
+**MacOS (Darwin)**
+- Open the Terminal in VSCode: [Terminal] -> [New Terminal].
+Run the build task: [Terminal] -> [Run Task...] -> select **build (Darwin)**. You can use the shortcut [Ctrl+Shift+B] if you set it as the default build task.
+
+
+
+### Debugging the Project
+- Navigate to [Run and Debug] in VSCode or press [Ctrl+Shift+D].
+Select the appropriate launch configuration 
+   - for macOS cmsis-dap-debug (Darwin)
+   -  for Windows cmsis-dap-debug (Windows)
+- Click on the green play button or press [F5] to start debugging.
 
 ## Common Issues
 ### 1. Windows fails to initializing cmsis-dap debugger. 
