@@ -2,23 +2,45 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build task",         
-            "type": "shell",               
-            "command": "mingw32-make -j24",
-            "problemMatcher": [],          
+            "label": "build (Darwin)",
+            "type": "shell",
+            "command": "make",
+            "args": [],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["absolute"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
             }
         },
         {
-            "label": "download dap",
+            "label": "build (Windows)",
             "type": "shell",
-            "command":"mingw32-make download_dap",
-            "group": {                     
+            "command": "mingw32-make -j24",
+            "group": {
                 "kind": "build",
-                "isDefault": false,
+                "isDefault": false
             },
+            "problemMatcher": []
+        },
+        {
+            "label": "download dap (Windows)",
+            "type": "shell",
+            "command": "mingw32-make download_dap",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
         }
     ]
 }
