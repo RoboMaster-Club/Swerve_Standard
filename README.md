@@ -16,7 +16,7 @@ Download VSCode from [here](https://code.visualstudio.com/download)
 - Download MSYS2 from [here](https://www.msys2.org/)
 - The default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
 - Install OpenOCD, arm-none-eabi-gcc, and gdb-multiarch by running these commands in MSYS2 terminal.
-```bash
+```powershell
 pacman -S mingw-w64-x86_64-openocd
 pacman -S mingw-w64-x86_64-arm-none-eabi-gcc
 pacman -S mingw-w64-x86_64-gdb-multiarch
@@ -29,15 +29,16 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 brew install openocd
 ```
 
-**Make sure to add necessary tools to PATH variable.** This will allow your tools to be accessed globally. Alternatively you can modify the vscode .json files.
+**Make sure to add necessary tools to PATH variable.** This will allow your tools to be accessed globally. Alternatively you can modify the vscode settings.json file.
 
 ### Set up VSCode
 - Add the tool path for OpenOCD and make tools.
 
 - Install the VSCode extension [Cortex-Debug](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug) to enable ARM microcontroller debugging.
 
-- Open the 'setting.json' file of the Cortex-Debug extension, and add
-`"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"` to the end.
+- Add GDB path by opening your VSCode settings.json in VSCode and add the following to the end of the file.
+   - **Windows:** ```"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"```.
+   - **MacOS:** ```"cortex-debug.gdbPath": "/usr/local/arm-gnu-toolchain-13.2.Rel1-darwin-arm64-arm-none-eabi/bin/arm-none-eabi-gdb"```.
 
 ## How to use
 ### Building the Project
