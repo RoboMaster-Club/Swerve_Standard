@@ -23,13 +23,13 @@ pacman -S mingw-w64-x86_64-gdb-multiarch
 ```
 
 **MacOS - Apple Silicon**
- - Install arm-none-eabi-gcc(darwin-arm64) from [here](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) into your `usr/local/` directory (homebrew does not install all the necessary files).
- - Install OpenOCD and arm-none-eabi-gdb using [homebrew](https://docs.brew.sh/Installation).
+ - Install Arm embedded toolchain and OpenOCD and arm-none-eabi-gdb using [homebrew](https://docs.brew.sh/Installation).
 ```zsh
+brew install gcc-arm-embedded  
 brew install openocd
 ```
 
-**Make sure to add necessary tools to PATH variable.** This will allow your tools to be accessed globally. Alternatively you can modify the vscode settings.json file.
+**Make sure to add necessary tools to VSCode settings.json** Alternatively, you can add them to PATH variable to allow them to be accessed globally.
 
 ### Set up VSCode
 - Add the tool path for OpenOCD and make tools.
@@ -38,7 +38,7 @@ brew install openocd
 
 - Add GDB path by opening your VSCode settings.json in VSCode and add the following to the end of the file.
    - **Windows:** ```"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"```.
-   - **MacOS:** ```"cortex-debug.gdbPath": "/usr/local/arm-gnu-toolchain-13.2.Rel1-darwin-arm64-arm-none-eabi/bin/arm-none-eabi-gdb"```.
+   - **MacOS:** ```"cortex-debug.gdbPath": "/opt/homebrew/bin/arm-none-eabi-gdb"```.
 
 ## How to use
 ### Building the Project
