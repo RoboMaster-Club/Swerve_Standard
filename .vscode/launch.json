@@ -29,8 +29,7 @@
             "runToEntryPoint": "main", // stop at main
             "rtos": "FreeRTOS",
             "liveWatch": { 
-                "enabled": true, 
-                "samplesPerSecond": 4 
+                "enabled": true
             }
         }
     ]
