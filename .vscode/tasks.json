@@ -34,6 +34,16 @@
             "problemMatcher": []
         },
         {
+            "label": "rebuild (Windows)",
+            "type": "shell",
+            "command": "mingw32-make clean; mingw32-make -j24 V=1",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "clean (Windows)",
             "type": "shell",
             "command": "mingw32-make clean",
