@@ -25,7 +25,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "global_define.h"
 #include "tim.h"
 #include "dma.h"
 #include "usart.h"
@@ -132,8 +131,6 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
 
-  osThreadDef(imu_task, IMU_Task, osPriorityHigh, 0, 256);
-  imu_TaskHandle = osThreadCreate(osThread(imu_task), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
