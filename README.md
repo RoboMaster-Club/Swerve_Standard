@@ -8,35 +8,61 @@ cd Control_Base_Template
 git submodule update --init
 ```
 
-## vscode MAKEFILE env setup guide
-### Install env tools
-- download msys2 from [here](https://www.msys2.org/)
+## VSCode MAKEFILE environment setup guide
+### Install tools
+Download VSCode from [here](https://code.visualstudio.com/download)
 
-- the default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
-
-- install openocd, arm-none-eabi-gcc, gdb-multiarch from [mingw64 packages](https://packages.msys2.org/package/)
-
-``` bash
+**Windows**
+- Download MSYS2 from [here](https://www.msys2.org/)
+- The default installation path is `C:\msys64`, run `C:\msys64\msys2.exe`.
+- Install OpenOCD, arm-none-eabi-gcc, and gdb-multiarch by running these commands in MSYS2 terminal.
+```powershell
 pacman -S mingw-w64-x86_64-openocd
 pacman -S mingw-w64-x86_64-arm-none-eabi-gcc
 pacman -S mingw-w64-x86_64-gdb-multiarch
 ```
 
-- add tool path for openocd and make tool
+**MacOS - Apple Silicon**
+ - Install Arm embedded toolchain and OpenOCD and arm-none-eabi-gdb using [homebrew](https://docs.brew.sh/Installation).
+```zsh
+brew install gcc-arm-embedded  
+brew install openocd
+```
 
-- install vscode extension `Cortex-Debug`
+**Make sure to add necessary tools to VSCode settings.json** Alternatively, you can add them to PATH variable to allow them to be accessed globally.
 
-- Open json file of the extension, and add `"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"` to the end of 'setting.json' of Cortex-Debug extension setting.
+### Set up VSCode
+- Add the tool path for OpenOCD and make tools.
 
-### How to use
-- build: [Termimal]->[Run Task...]->[build task]. ShortCut [Ctrl+Shift+B]
-- debug: navigate to Run and Debug in vscode with [Strl+Shift+D], select the launch task, and run debug. Shortcut [F5].
+- Install the VSCode extension [Cortex-Debug](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug) to enable ARM microcontroller debugging.
+
+- Add GDB path by opening your VSCode settings.json in VSCode and add the following to the end of the file.
+   - **Windows:** ```"cortex-debug.gdbPath": "c:/msys64/mingw64/bin/gdb-multiarch.exe"```.
+   - **MacOS:** ```"cortex-debug.gdbPath": "/opt/homebrew/bin/arm-none-eabi-gdb"```.
+
+## How to use
+### Building the Project
+Open the Command Palatte in VSCode: [Ctrl+Shift+P].
+Then, select **Tasks: Run Build Tasks** and pick the appropriate build task.
+- **Windows:** build (Windows). 
+- **MacOS:** build (Darwin).
+
+You can use the shortcut [Ctrl+Shift+B] if you set it as the default build task.
+
+
+### Debugging the Project
+Navigate to [Run and Debug] in VSCode or press [Ctrl+Shift+D].
+Select the appropriate launch configuration 
+- **Windows:** cmsis-dap-debug (Windows)
+- **MacOS:** cmsis-dap-debug (Darwin)
+
+Click on the green play button or press [F5] to start debugging.
 
 ## Common Issues
 ### 1. Windows fails to initializing cmsis-dap debugger. 
 Solution: Go to device manager and uninstall the usb device (probably having some error message in the list). Unplug and plug in the debugger again.
 
-### 2.  Tools (OpenOCD, make tools) not found
+### 2. Tools (OpenOCD, make tools) not found
 ```
 Failed to launch OpenOCD GDB Server:...
 ```
@@ -45,10 +71,10 @@ or
 mingw32-make: The term 'mingw32-make' is not recognized as a name of a cmdlet, function, script file, or executable program.
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
 ```
-Solution1:
+**Solution1:**
 Add openocd.exe to system environmental variable. If you followed the installation instruction in this README file, then OpenOCD should be install at default location `C:\msys64\mingw64\bin\openocd.exe`, for windows user. Add `C:\msys64\mingw64\bin` to system executable path.
 
-Solution2:
+**Solution2:**
 If you don't want to mess with the system path, you could also add local openocd path in `.vscode/launch.json`. Add attribute `serverpath` by adding `"serverpath": "C:\\msys64\\mingw64\\bin\\openocd.exe"` in configuration.
 
 **Note**
