@@ -7,7 +7,7 @@ DJI_Motor_Handle_t *motor_lf, *motor_lr, *motor_rr, *motor_lr;
 void Chassis_Init() {
     Motor_Config_t motor_config = {
         .can_bus = 1,
-        .can_id = 0x201,
+        .speed_controller_id = 3,
         .offset = 0,
         .reversal = MOTOR_REVERSAL_NORMAL,
         .control_mode = SPEED_CONTROL,
@@ -24,5 +24,5 @@ void Chassis_Init() {
 }
 
 void Chassis_Task() {
-    
+
 }
