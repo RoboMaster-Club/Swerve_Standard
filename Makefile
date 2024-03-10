@@ -95,6 +95,7 @@ Hardware-Library/Devices/Src/mf_motor.c \
 Hardware-Library/Devices/Src/remote.c \
 Hardware-Library/Devices/Src/imu_task.c \
 app/src/motor_task.c \
+app/src/chassis_task.c \
 app/src/robot.c
 
 # ASM sources
