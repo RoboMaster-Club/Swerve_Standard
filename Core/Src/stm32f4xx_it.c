@@ -236,6 +236,20 @@ void CAN1_RX0_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles CAN1 RX1 interrupt.
+  */
+void CAN1_RX1_IRQHandler(void)
+{
+  /* USER CODE BEGIN CAN1_RX1_IRQn 0 */
+
+  /* USER CODE END CAN1_RX1_IRQn 0 */
+  HAL_CAN_IRQHandler(&hcan1);
+  /* USER CODE BEGIN CAN1_RX1_IRQn 1 */
+
+  /* USER CODE END CAN1_RX1_IRQn 1 */
+}
+
+/**
   * @brief This function handles EXTI line[9:5] interrupts.
   */
 void EXTI9_5_IRQHandler(void)
@@ -269,7 +283,7 @@ void TIM2_IRQHandler(void)
 void CAN2_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN2_RX0_IRQn 0 */
-  IT_DecodeCAN2();
+
   /* USER CODE END CAN2_RX0_IRQn 0 */
   HAL_CAN_IRQHandler(&hcan2);
   /* USER CODE BEGIN CAN2_RX0_IRQn 1 */
@@ -277,35 +291,20 @@ void CAN2_RX0_IRQHandler(void)
   /* USER CODE END CAN2_RX0_IRQn 1 */
 }
 
+/**
+  * @brief This function handles CAN2 RX1 interrupt.
+  */
+void CAN2_RX1_IRQHandler(void)
+{
+  /* USER CODE BEGIN CAN2_RX1_IRQn 0 */
+
+  /* USER CODE END CAN2_RX1_IRQn 0 */
+  HAL_CAN_IRQHandler(&hcan2);
+  /* USER CODE BEGIN CAN2_RX1_IRQn 1 */
+
+  /* USER CODE END CAN2_RX1_IRQn 1 */
+}
+
 /* USER CODE BEGIN 1 */
-void IT_DecodeCAN1()
-{
-    
-  CAN_RxHeaderTypeDef rx_header;
-  uint8_t data_temp[8];
-  if (HAL_CAN_GetRxMessage(&hcan1, CAN_FilterFIFO0, &rx_header, data_temp) == HAL_OK)
-  {
-  switch (rx_header.StdId)
-  {
-  case 0x04:
-    // CAN message decode
-    break;
-  }
-  }
-}
-void IT_DecodeCAN2()
-{
-    
-  CAN_RxHeaderTypeDef rx_header;
-  uint8_t data_temp[8];
-  if (HAL_CAN_GetRxMessage(&hcan2, CAN_FilterFIFO0, &rx_header, data_temp) == HAL_OK)
-  {
-      switch (rx_header.StdId)
-      {
-        case 0x01:
-        //CAN decode ut here    
-        break;
-      }
-  }
-}
+
 /* USER CODE END 1 */
