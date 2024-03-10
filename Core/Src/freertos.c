@@ -25,7 +25,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "global_define.h"
 #include "tim.h"
 #include "dma.h"
 #include "usart.h"
@@ -56,24 +55,14 @@
 /* USER CODE BEGIN Variables */
 osThreadId imu_TaskHandle;
 /* USER CODE END Variables */
-osThreadId global_init_tasHandle;
-osThreadId can1_txHandle;
-osThreadId debug_taskHandle;
-osThreadId robot_ctrl_taskHandle;
-osThreadId can2_txHandle;
-osMessageQId can1_tx_queueHandle;
-osMessageQId can2_tx_queueHandle;
+osThreadId defaultTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 void Global_Init(void);
 /* USER CODE END FunctionPrototypes */
 
-void GlobalInit(void const * argument);
-extern void CAN_BSP_CAN1Tx(void const * argument);
-void Debug_Task(void const * argument);
-void Robot_Ctrl(void const * argument);
-extern void CAN_BSP_CAN2Tx(void const * argument);
+void StartDefaultTask(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -131,127 +120,37 @@ void MX_FREERTOS_Init(void) {
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
-  /* Create the queue(s) */
-  /* definition and creation of can1_tx_queue */
-  osMessageQDef(can1_tx_queue, 4, CAN_Tx_Pack_t);
-  can1_tx_queueHandle = osMessageCreate(osMessageQ(can1_tx_queue), NULL);
-
-  /* definition and creation of can2_tx_queue */
-  osMessageQDef(can2_tx_queue, 4, CAN_Tx_Pack_t);
-  can2_tx_queueHandle = osMessageCreate(osMessageQ(can2_tx_queue), NULL);
-
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of global_init_tas */
-  osThreadDef(global_init_tas, GlobalInit, osPriorityNormal, 0, 128);
-  global_init_tasHandle = osThreadCreate(osThread(global_init_tas), NULL);
-
-  /* definition and creation of can1_tx */
-  osThreadDef(can1_tx, CAN_BSP_CAN1Tx, osPriorityHigh, 0, 128);
-  can1_txHandle = osThreadCreate(osThread(can1_tx), NULL);
-
-  /* definition and creation of debug_task */
-  osThreadDef(debug_task, Debug_Task, osPriorityIdle, 0, 128);
-  debug_taskHandle = osThreadCreate(osThread(debug_task), NULL);
-
-  /* definition and creation of robot_ctrl_task */
-  osThreadDef(robot_ctrl_task, Robot_Ctrl, osPriorityHigh, 0, 512);
-  robot_ctrl_taskHandle = osThreadCreate(osThread(robot_ctrl_task), NULL);
-
-  /* definition and creation of can2_tx */
-  osThreadDef(can2_tx, CAN_BSP_CAN2Tx, osPriorityHigh, 0, 128);
-  can2_txHandle = osThreadCreate(osThread(can2_tx), NULL);
+  /* definition and creation of defaultTask */
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 
-  osThreadDef(imu_task, IMU_Task, osPriorityHigh, 0, 256);
-  imu_TaskHandle = osThreadCreate(osThread(imu_task), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
 
-/* USER CODE BEGIN Header_GlobalInit */
+/* USER CODE BEGIN Header_StartDefaultTask */
 /**
- * @brief  Function implementing the global_init_tas thread.
- * @param  argument: Not used
- * @retval None
- */
-/* USER CODE END Header_GlobalInit */
-void GlobalInit(void const * argument)
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void const * argument)
 {
-  /* USER CODE BEGIN GlobalInit */
-/* Infinite loop */
-#ifdef LED_ENABLED
-#endif
-
-#ifdef REMOTE_ENABLED
-  RemoteInit();
-#endif
-
-#ifdef CAN_ENABLED
-  CAN_BSP_Init(&hcan1);
-  CAN_BSP_Init(&hcan2);
-#endif
-
-#ifdef PWM_ENABLED
-  HAL_TIM_Base_Start(&htim1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-
-  HAL_TIM_Base_Start(&htim8);
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3);
-#endif
-  vTaskDelete(NULL);
-  /* USER CODE END GlobalInit */
-}
-
-/* USER CODE BEGIN Header_Debug_Task */
-/**
- * @brief Function implementing the debug_task thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_Debug_Task */
-__weak void Debug_Task(void const * argument)
-{
-  /* USER CODE BEGIN Debug_Task */
-  /* Infinite loop */
-  portTickType xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
-  const TickType_t TimeIncrement = pdMS_TO_TICKS(10);
-  while (1)
-  {
-    printf("debug_param=%f\r\n",0.0f);
-    vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
-  }
-  /* USER CODE END Debug_Task */
-}
-
-/* USER CODE BEGIN Header_Robot_Ctrl */
-/**
-* @brief Function implementing the robot_ctrl_task thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_Robot_Ctrl */
-__weak void Robot_Ctrl(void const * argument)
-{
-  /* USER CODE BEGIN Robot_Ctrl */
-  
+  /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
   for(;;)
   {
-    DJI_Motor_Send(HEAD, 1, 3000, 0, 0, 0);
     osDelay(1);
   }
-  /* USER CODE END Robot_Ctrl */
+  /* USER CODE END StartDefaultTask */
 }
 
 /* Private application code --------------------------------------------------*/

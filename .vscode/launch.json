@@ -27,7 +27,11 @@
                 "openocd_cmsis_dap.cfg" // config
             ],
             "runToEntryPoint": "main", // stop at main
-            "rtos": "FreeRTOS"
+            "rtos": "FreeRTOS",
+            "liveWatch": { 
+                "enabled": true,
+                "samplesPerSecond": 4
+            }
         }
     ]
 }
