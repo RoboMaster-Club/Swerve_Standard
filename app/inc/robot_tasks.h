@@ -5,6 +5,8 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+#include "motor_task.h"
+
 extern void IMU_Task(void const *pvParameters);
 
 osThreadId imu_task_handle;
@@ -38,7 +40,7 @@ void Robot_Tasks_Robot_Control(void const *argument)
     const TickType_t TimeIncrement = pdMS_TO_TICKS(4);
     while (1)
     {
-
+        Robot_Ctrl_Loop();
         vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
     }
 }
@@ -55,7 +57,7 @@ void Robot_Tasks_Motor(void const *argument)
     const TickType_t TimeIncrement = pdMS_TO_TICKS(1);
     while (1)
     {
-        
+        Motor_Task_Loop();
         vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
     }
 }
