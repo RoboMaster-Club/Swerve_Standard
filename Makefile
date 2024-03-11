@@ -81,6 +81,7 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c \
 Hardware-Library/Algo/Src/MahonyAHRS.c \
 Hardware-Library/Algo/Src/pid.c \
+Hardware-Library/Algo/Src/Swerve_Locomotion.c \
 Hardware-Library/BSP/Src/bsp_can.c \
 Hardware-Library/BSP/Src/bsp_delay.c \
 Hardware-Library/BSP/Src/bsp_pwm.c \
