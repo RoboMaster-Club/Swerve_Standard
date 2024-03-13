@@ -2,6 +2,8 @@
 
 #include "robot_tasks.h"
 #include "chassis_task.h"
+#include "gimbal_task.h"
+#include "launch_task.h"
 #include "remote.h"
 #include "bsp_can.h"
 
@@ -12,7 +14,9 @@ void Robot_Cmd_Loop();
 
 void Robot_Init() {
     // Initialize all hardware
-    Chassis_Task_Init();
+    // Chassis_Task_Init();
+    Gimbal_Task_Init();
+    Launch_Task_Init();
     Remote_Init();
     CAN_Service_Init();
     // Initialize all tasks
@@ -22,7 +26,9 @@ void Robot_Init() {
 void Robot_Ctrl_Loop() {
     // Control loop for the robot
     Robot_Cmd_Loop();
-    Chassis_Ctrl_Loop();
+    // Chassis_Ctrl_Loop();
+    Gimbal_Ctrl_Loop();
+    Launch_Ctrl_Loop();
 }
 
 void Robot_Cmd_Loop() {
@@ -31,5 +37,4 @@ void Robot_Cmd_Loop() {
     } else if (g_remote.controller.right_switch == MID){
         g_robot_state.enabled = 1;
     }
-
 }
