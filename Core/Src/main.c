@@ -106,6 +106,7 @@ int main(void)
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
   Robot_Init();
+  osDelay(1000);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

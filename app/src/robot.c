@@ -10,13 +10,13 @@
 Robot_State_t g_robot_state = {0, 0};
 extern Remote_t g_remote;
 
-void Robot_Cmd_Loop();
+void Robot_Cmd_Loop(void);
 
 void Robot_Init() {
     // Initialize all hardware
-    // Chassis_Task_Init();
+    Chassis_Task_Init();
     Gimbal_Task_Init();
-    Launch_Task_Init();
+    //Launch_Task_Init();
     Remote_Init();
     CAN_Service_Init();
     // Initialize all tasks
@@ -26,9 +26,9 @@ void Robot_Init() {
 void Robot_Ctrl_Loop() {
     // Control loop for the robot
     Robot_Cmd_Loop();
-    // Chassis_Ctrl_Loop();
-    Gimbal_Ctrl_Loop();
-    Launch_Ctrl_Loop();
+    Chassis_Ctrl_Loop();
+    //Gimbal_Ctrl_Loop();
+    //Launch_Ctrl_Loop();
 }
 
 void Robot_Cmd_Loop() {

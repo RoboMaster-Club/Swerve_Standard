@@ -13,8 +13,8 @@ Gimbal_Target_t g_gimbal_target;
 void Gimbal_Task_Init() {
     Motor_Config_t yaw_motor_config = {
         .can_bus = 1,
-        .speed_controller_id = 5,
-        .offset = 0,
+        .speed_controller_id = 3,
+        .offset = 3690,
         .control_mode = VELOCITY_CONTROL,
         .reversal = MOTOR_REVERSAL_NORMAL,
         .velocity_pid =
@@ -25,8 +25,8 @@ void Gimbal_Task_Init() {
     };
 
     Motor_Config_t pitch_motor_config = {
-        .can_bus = 1,
-        .speed_controller_id = 6,
+        .can_bus = 2,
+        .speed_controller_id = 2,
         .offset = 0,
         .control_mode = POSITION_CONTROL,
         .reversal = MOTOR_REVERSAL_NORMAL,
