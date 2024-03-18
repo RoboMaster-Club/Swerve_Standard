@@ -1,28 +1,26 @@
+
 #include "chassis_task.h"
 
 #include "dji_motor.h"
+#include "robot.h"
+#include "remote.h"
+#include "imu_task.h"
+#include "Swerve_Locomotion.h"
 
-DJI_Motor_Handle_t *motor_lf, *motor_lr, *motor_rr, *motor_lr;
+extern Robot_State_t g_robot_state;
+extern Remote_t g_remote;
+extern IMU_t g_imu;
 
-void Chassis_Init() {
-    Motor_Config_t motor_config = {
-        .can_bus = 1,
-        .speed_controller_id = 3,
-        .offset = 0,
-        .reversal = MOTOR_REVERSAL_NORMAL,
-        .control_mode = SPEED_CONTROL,
-        .speed_pid = {
-            .kp = 0,
-            .ki = 0,
-            .kd = 0,
-            .integral_limit = 0,
-            .output_limit = 0,
-            .dead_zone = 0,
-        },
-    };
-    motor_lf = DJI_Motor_Init(&motor_config, M3508);
+void Chassis_Task_Init() {
+    Swerve_Init();
 }
 
-void Chassis_Task() {
-
+void Chassis_Ctrl_Loop() {
+    if (g_robot_state.enabled) {
+        Swerve_Drive(g_remote.controller.left_stick.x / REMOTE_STICK_MAX,
+                    g_remote.controller.left_stick.y / REMOTE_STICK_MAX, 
+                    -g_remote.controller.right_stick.x / REMOTE_STICK_MAX);
+    } else {
+        Swerve_Disable();
+    }
 }
