@@ -6,6 +6,8 @@
 #include "cmsis_os.h"
 
 #include "motor_task.h"
+#include "debug_task.h"
+#include "bsp_serial.h"
 
 extern void IMU_Task(void const *pvParameters);
 
@@ -13,10 +15,13 @@ osThreadId imu_task_handle;
 osThreadId robot_control_task_handle;
 osThreadId motor_task_handle;
 osThreadId ui_task_handle;
+osThreadId debug_task_handle;
 
 void Robot_Tasks_Robot_Control(void const *argument);
 void Robot_Tasks_Motor(void const *argument);
 void Robot_Tasks_IMU(void const *argument);
+void Robot_Tasks_UI(void const *argument);
+void Robot_Tasks_Debug(void const *argument);
 
 void Robot_Tasks_Start()
 {
@@ -29,8 +34,12 @@ void Robot_Tasks_Start()
     osThreadDef(robot_control_task, Robot_Tasks_Robot_Control, osPriorityAboveNormal, 0, 256);
     robot_control_task_handle = osThreadCreate(osThread(robot_control_task), NULL);
 
-    osThreadDef(ui_task, Robot_Tasks_Robot_Control, osPriorityAboveNormal, 0, 256);
+    osThreadDef(ui_task, Robot_Tasks_UI, osPriorityAboveNormal, 0, 256);
     ui_task_handle = osThreadCreate(osThread(ui_task), NULL);
+
+    osThreadDef(debug_task, Robot_Tasks_Debug, osPriorityAboveNormal, 0, 256);
+    debug_task_handle = osThreadCreate(osThread(debug_task), NULL);
+
 }
 
 void Robot_Tasks_Robot_Control(void const *argument)
@@ -70,6 +79,18 @@ void Robot_Tasks_UI(void const *argument)
     while (1)
     {
 
+        vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
+    }
+}
+
+void Robot_Tasks_Debug(void const *argument)
+{
+    portTickType xLastWakeTime;
+    xLastWakeTime = xTaskGetTickCount();
+    const TickType_t TimeIncrement = pdMS_TO_TICKS(10);
+    while (1)
+    {
+        Debug_Task_Loop();
         vTaskDelayUntil(&xLastWakeTime, TimeIncrement);
     }
 }
